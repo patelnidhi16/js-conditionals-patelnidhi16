@@ -30,6 +30,37 @@
  * @param {number} temperature - Current temperature in Celsius
  * @returns {{ season: string, activity: string } | null}
  */
+
+const SEASON = {
+  Spring: [3, 4, 5],
+  Winter: [12, 1, 2],
+  Summer: [6, 7, 8],
+  Autumn: [9, 10, 11],
+};
 export function getSeasonActivity(month, temperature) {
-  // Your code here
+  if (month < 1 || month > 12) return null;
+  const season = Object.keys(SEASON).find((val) => {
+    return SEASON[val].includes(month);
+  });
+  switch (season) {
+    case "Winter":
+      return {
+        activity: temperature >= 0 ? "ice skating" : "skiing",
+        season,
+      };
+    case "Spring":
+      return {
+        activity: temperature > 20 ? "hiking" : "museum visit",
+        season,
+      };
+    case "Summer":
+      return { activity: temperature > 35 ? "swimming" : "cycling", season };
+    case "Autumn":
+      return {
+        activity: temperature > 15 ? "nature walk" : "reading at a cafe",
+        season,
+      };
+    default:
+      break;
+  }
 }

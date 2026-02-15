@@ -29,6 +29,16 @@
  * @param {number} serviceRating - Service rating from 1 to 5
  * @returns {{ tipPercentage: number, tipAmount: number, totalAmount: number } | null}
  */
+const TIP_PERCENTAGE = [5, 10, 15, 20, 25];
 export function calculateTip(billAmount, serviceRating) {
-  // Your code here
+  if (billAmount <= 0 || typeof billAmount != "number") return null;
+  if (!Number.isInteger(serviceRating) || serviceRating < 1 || serviceRating > 5)
+    return null;
+  const tipPer = TIP_PERCENTAGE[serviceRating - 1];
+  const tipAmount = parseFloat(((billAmount * tipPer) / 100).toFixed(2));
+  return {
+    tipPercentage: tipPer,
+    tipAmount: tipAmount,
+    totalAmount: billAmount + tipAmount,
+  };
 }

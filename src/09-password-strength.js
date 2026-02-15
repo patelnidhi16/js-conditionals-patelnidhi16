@@ -25,6 +25,36 @@
  * @param {string} password - The password to evaluate
  * @returns {string} "weak", "medium", "strong", or "very strong"
  */
+
+const STRENGTH = ["weak", "medium", "strong", "very strong"];
 export function checkPasswordStrength(password) {
-  // Your code here
+  if (typeof password !== "string") {
+    return STRENGTH[0];
+  }
+
+  const trimPass = password.trim();
+  if (!trimPass) {
+    return STRENGTH[0];
+  }
+
+  // let count = 0;
+
+  // if (trimPass.length >= 8) count++;
+  // if (/[A-Z]/.test(trimPass)) count++;
+  // if (/[a-z]/.test(trimPass)) count++;
+  // if (/[0-9]/.test(trimPass)) count++;
+  // if (/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/.test(trimPass)) count++;
+  const arr = [
+    trimPass.length >= 8,
+    /[A-Z]/.test(trimPass),
+    /[a-z]/.test(trimPass),
+    /[0-9]/.test(trimPass),
+    /[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/.test(trimPass),
+  ];
+
+  const count = arr.filter(Boolean).length;
+  if (count <= 1) return STRENGTH[0];
+  if (count <= 3) return STRENGTH[1];
+  if (count === 4) return STRENGTH[2];
+  return STRENGTH[3];
 }

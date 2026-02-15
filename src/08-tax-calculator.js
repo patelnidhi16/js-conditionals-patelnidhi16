@@ -25,6 +25,40 @@
  * @param {number} income - Annual income in dollars
  * @returns {number} Total tax amount owed
  */
+
+const calculateTaxPer = (income) => {
+  if (income <= 10000) {
+    return {
+      taxPercentage: 0,
+      amount: 0,
+    };
+  }
+  if (income <= 30000) {
+    return {
+      taxPercentage: 10,
+      amount: 10000,
+    };
+  }
+  if (income <= 70000) {
+    return {
+      taxPercentage: 20,
+      amount: 30000,
+    };
+  }
+  return {
+    taxPercentage: 30,
+    amount: 70000,
+  };
+};
 export function calculateTax(income) {
-  // Your code here
+  if (income <= 0) {
+    return 0;
+  }
+  const count = calculateTaxPer(income);
+  if (count.taxPercentage <= 0) {
+    return 0;
+  }
+  let amount = ((income - count.amount) * count.taxPercentage) / 100;
+  let tax = calculateTax(count.amount);
+  return amount + tax;
 }

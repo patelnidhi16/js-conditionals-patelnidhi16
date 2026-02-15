@@ -22,6 +22,25 @@
  * @param {boolean} isWeekend - Whether it's a weekend
  * @returns {number} The ticket price, or -1 for invalid input
  */
+function calculateBasePrice(age) {
+  if (age < 0) {
+    return -1;
+  }
+  if (age <= 12) {
+    return 8;
+  }
+  if (age <= 17) {
+    return 12;
+  }
+  if (age <= 59) {
+    return 15;
+  }
+  return 10;
+}
+const weekendCharge = 3;
 export function getTicketPrice(age, isWeekend) {
-  // Your code here
+  const basePrice = calculateBasePrice(age);
+  if (basePrice == -1) return basePrice;
+
+  return isWeekend ? basePrice + weekendCharge : basePrice;
 }

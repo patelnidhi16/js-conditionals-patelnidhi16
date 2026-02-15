@@ -28,6 +28,27 @@
  * @param {number} orderTotal - Total order amount in dollars
  * @returns {number} Shipping cost, 0 for free shipping, or -1 for invalid input
  */
+
+function calculateAmount(weight, orderTotal, isDomestic) {
+  if (weight <= 0 || orderTotal < 0) {
+    return -1;
+  }
+   if ((isDomestic && orderTotal > 50) || (!isDomestic && orderTotal > 100)) {
+    return 0;
+  }
+  if (weight <= 1) {
+    return isDomestic ? 5 : 15;
+  }
+  if (weight <= 5) {
+    return isDomestic ? 10 : 25;
+  }
+  if (weight > 5) {
+    return isDomestic ? 15 : 40;
+  }
+}
 export function calculateShipping(weight, country, orderTotal) {
-  // Your code here
+  const isDomestic = country == "US";
+
+  return calculateAmount(weight, orderTotal, isDomestic);
+ 
 }
